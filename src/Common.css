@@ -1,0 +1,18 @@
+.instagramImage {
+    width: 100%;
+    /*cursor: pointer;*/
+}
+
+.navMenuItem {
+    text-decoration: none;
+    color: black;    
+}
+
+.navMenuItem:hover {
+    text-decoration: none;
+}
+
+.navMenuItemActive {
+    text-decoration: none;
+    font-weight: bold;
+}
