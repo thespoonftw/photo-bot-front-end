@@ -46,7 +46,7 @@ export class NavMenu extends Component {
                   <br></br>
                   <span><NavLink to="/" className="navMenuItem" activeClassName="navMenuItemActive" exact>Home</NavLink></span>
                   <span> • </span>
-                  <span><NavLink to="/counter" className="navMenuItem" activeClassName="navMenuItemActive" exact>Counter</NavLink></span>
+                  <span><NavLink to="/test" className="navMenuItem" activeClassName="navMenuItemActive" exact>Test</NavLink></span>
                 </span>                
               </div>
             </div>

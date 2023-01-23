@@ -15,7 +15,7 @@ export default class App extends Component {
       <Layout>
         <Route exact path='/' component={PhotoHoliday} />
         <Route path='/counter' component={Counter} />
-        <Route path='/fetch-data' component={FetchData} />
+        <Route path='/test' component={FetchData} />
       </Layout>
     );
   }
