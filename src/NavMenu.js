@@ -55,40 +55,5 @@ export class NavMenu extends Component {
         </div>
       </header>
     );
-
-    /*
-    <Container>
-    <NavbarBrand tag={Link} to="/" >Michael Wright  </NavbarBrand>
-              <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
-              <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen={!this.state.collapsed} navbar>
-                <ul className="navbar-nav flex-grow">              
-                  <NavItem>
-                    <NavLink tag={Link} className="text-dark" to="/">Blog</NavLink>
-                  </NavItem>
-                  <NavItem>
-                    <NavLink tag={Link} className="text-dark" to="/career">Career</NavLink>
-                  </NavItem>
-                  <NavItem>
-                    <NavLink tag={Link} className="text-dark" to="/skills">Skills</NavLink>
-                  </NavItem>
-                  <NavItem>
-                    <NavLink tag={Link} className="text-dark" to="/games">Games</NavLink>
-                  </NavItem>
-                  <NavItem>
-                    <NavLink tag={Link} className="text-dark" to="/art">Art</NavLink>
-                  </NavItem>
-                  <NavItem>
-                    <NavLink tag={Link} className="text-dark" to="/travel">Travel</NavLink>
-                  </NavItem>
-                  <NavItem>
-                    <NavLink tag={Link} className="text-dark" to="/photos">Photos</NavLink>
-                  </NavItem>
-                </ul>
-              </Collapse>
-            </Container>
-
-    */
   }
-
-
 }

@@ -28,7 +28,10 @@ export class PhotoGrid extends Component {
           <div className="row" key={y}>
             {columns.map(x =>
               x + (y * 3) < this.props.photos.length ?
-                <Imgur square url={this.props.photos[x + (y * 3)]} onClick={() => this.clickImage(x + (y * 3))} key={x + (y * 3)}></Imgur>
+                <Imgur square 
+                  url={`thumbnails/${this.props.photos[x + (y * 3)].id}.jpg`} 
+                  onClick={() => this.clickImage(x + (y * 3))} key={x + (y * 3)}
+                ></Imgur>
                 :
                 <div className="col-md"></div>
             )}
@@ -40,7 +43,7 @@ export class PhotoGrid extends Component {
                 
             </ModalHeader>
             <ModalBody>
-              <img src={this.props.photos[this.state.imageIndex]} style={{width: "100%"}} alt=""></img>
+              <img src={this.props.photos[this.state.imageIndex].url} style={{width: "100%"}} alt=""></img>
             </ModalBody>
           
           
