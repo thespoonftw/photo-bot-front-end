@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { Vert } from '../components/Vert';
-import { PhotoGrid } from '../components/PhotoGrid';
 import { Link } from 'react-router-dom';
 
-export class AlbumPage extends Component {
-  static displayName = AlbumPage.name;
+export class DirectoryPage extends Component {
+  static displayName = DirectoryPage.name;
 
   constructor(props) {
     super(props);
@@ -12,12 +11,11 @@ export class AlbumPage extends Component {
   }
 
   componentDidMount() {
-    this.getAlbumData();
+    this.getAllPhotos();
   }
   
-  async getAlbumData() {
-    const id = this.props.match.params.id;
-    const response = await fetch('album/' + id);
+  async getAllPhotos() {
+    const response = await fetch('album');
     const data = await response.json();
     this.setState({ albumData: data, loading: false });
   }
@@ -29,10 +27,15 @@ export class AlbumPage extends Component {
       :
       <div>
         <Vert height='3'></Vert> 
-        <h3>{this.state.albumData.album.name} - {this.state.albumData.album.year}</h3>
-        <Link to='/'>&#60;- Return</Link>
+        <h2>Albums</h2>
         <Vert height='2'></Vert>
-        <PhotoGrid photos={this.state.albumData.photos} />
+        <ul>
+          {
+            this.state.albumData.map(a => 
+              <li key={a.id}><Link to={"/album/" + a.id} style={{fontSize: "20px"}} >{a.year} - {a.name}</Link></li>
+            )
+          }
+        </ul>        
         <Vert height='20'></Vert>
       </div>
     );
