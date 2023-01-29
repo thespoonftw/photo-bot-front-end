@@ -39,7 +39,7 @@ export class PhotoGrid extends Component {
   
         <Modal isOpen={this.state.fullScreen} toggle={toggle} size="xl">
             <ModalHeader toggle={toggle}>
-                <div style={{color: "lightgray"}}>#{this.state.imageIndex}</div>
+                <div style={{color: "lightgray"}}>#{this.props.photos[this.state.imageIndex].id}</div>
             </ModalHeader>
             <ModalBody>
               <div style={{ width: "100%", paddingBottom: "80vh", overflow: "hidden", position: "relative", background: "#fff", cursor: "pointer" }}>
