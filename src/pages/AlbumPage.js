@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
-import { Vert } from '../components/Vert';
 import { PhotoGrid } from '../components/PhotoGrid';
-import { Link } from 'react-router-dom';
+import { Pagelayout } from './PageLayout';
+import { Vert } from '../components/Vert';
+import { Http } from '../Http';
+import { Helper } from '../Helper';
+import { Badge } from 'reactstrap';
 
 export class AlbumPage extends Component {
   static displayName = AlbumPage.name;
@@ -11,14 +14,8 @@ export class AlbumPage extends Component {
     this.state = { albumData: [], loading: true };
   }
 
-  componentDidMount() {
-    this.getAlbumData();
-  }
-  
-  async getAlbumData() {
-    const id = this.props.match.params.id;
-    const response = await fetch('album/' + id);
-    const data = await response.json();
+  async componentDidMount() {
+    const data = await Http.getAlbumData(this.props.match.params.name);
     this.setState({ albumData: data, loading: false });
   }
 
@@ -27,14 +24,34 @@ export class AlbumPage extends Component {
       this.state.loading 
       ? <p><em>Loading...</em></p>
       :
-      <div>
-        <Vert height='3'></Vert> 
-        <h3>{this.state.albumData.album.name} - {this.state.albumData.album.year}</h3>
-        <Link to='/'>&#60;- Return</Link>
+      <Pagelayout Title={this.state.albumData.album.name} Return={true} >
+        <p><b>Date:</b> {Helper.getMonth(this.state.albumData.album.month)} {this.state.albumData.album.year}</p>
+
+        <p><b>In Album:</b> {this.renderUsers(this.state.albumData.usersInAlbum)} </p>
         <Vert height='2'></Vert>
         <PhotoGrid photos={this.state.albumData.photos} />
-        <Vert height='20'></Vert>
-      </div>
+      </Pagelayout>
     );
+  }
+
+  renderUsers(users) {
+
+    const vips = users.filter((u) => u.level >= 1);
+    const others = users.filter((u) => u.level < 1);
+
+    return <span>
+      {vips.map(u => 
+          <span>
+          <Badge color="info" style={{ minWidth: '60px' }} >{u.name}</Badge>
+          <span> </span>
+          </span>
+      )}
+      {others.map(u => 
+          <span>
+          <Badge style={{ minWidth: '60px' }} >{u.name}</Badge>
+          <span> </span>
+          </span>
+      )}
+    </span>
   }
 }
