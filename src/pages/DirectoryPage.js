@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Vert } from '../components/Vert';
 import { Link } from 'react-router-dom';
+import { Pagelayout } from './PageLayout';
+import { Http } from '../Http';
 
 export class DirectoryPage extends Component {
   static displayName = DirectoryPage.name;
@@ -10,13 +11,8 @@ export class DirectoryPage extends Component {
     this.state = { albumData: [], loading: true };
   }
 
-  componentDidMount() {
-    this.getAllPhotos();
-  }
-  
-  async getAllPhotos() {
-    const response = await fetch('album');
-    const data = await response.json();
+  async componentDidMount() {
+    const data = await Http.getAllPhotos();
     this.setState({ albumData: data, loading: false });
   }
 
@@ -25,19 +21,15 @@ export class DirectoryPage extends Component {
       this.state.loading 
       ? <p><em>Loading...</em></p>
       :
-      <div>
-        <Vert height='3'></Vert> 
-        <h2>Albums</h2>
-        <Vert height='2'></Vert>
+      <Pagelayout Title="Albums">
         <ul>
           {
             this.state.albumData.map(a => 
-              <li key={a.id}><Link to={"/album/" + a.id} style={{fontSize: "20px"}} >{a.year} - {a.name}</Link></li>
+              <li key={a.id}><Link to={"/album/" + a.name.replace(/ /g, "_") + "_" + a.year} style={{fontSize: "20px"}} >{a.year} - {a.name}</Link></li>
             )
           }
-        </ul>        
-        <Vert height='20'></Vert>
-      </div>
+        </ul>
+      </Pagelayout>
     );
   }
 }

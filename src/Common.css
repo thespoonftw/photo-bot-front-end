@@ -16,3 +16,19 @@
     text-decoration: none;
     font-weight: bold;
 }
+
+.layoutWrapper {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.layoutBody {
+    flex: 1;
+}
+
+.footer {
+    background-color: #dddddd;
+    padding: 20px;
+    flex-shrink: 0;
+}
