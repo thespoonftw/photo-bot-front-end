@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { PhotoGrid } from '../components/PhotoGrid';
 import { Pagelayout } from './PageLayout';
 import { Vert } from '../components/Vert';
-import { Http } from '../Http';
+import Http from '../Http';
 import { Helper } from '../Helper';
 import { Badge } from 'reactstrap';
 
@@ -15,8 +15,10 @@ export class AlbumPage extends Component {
   }
 
   async componentDidMount() {
-    const data = await Http.getAlbumData(this.props.match.params.name);
-    this.setState({ albumData: data, loading: false });
+    const albumData = await Http.getAlbumData(this.props.match.params.name);
+    const userDict = await Http.getAllUsersDict();
+    //console.log(userData);
+    this.setState({ albumData: albumData, userDict: userDict, loading: false });
   }
 
   render () {
@@ -26,10 +28,10 @@ export class AlbumPage extends Component {
       :
       <Pagelayout Title={this.state.albumData.album.name} Return={true} >
         <p><b>Date:</b> {Helper.getMonth(this.state.albumData.album.month)} {this.state.albumData.album.year}</p>
-
-        <p><b>In Album:</b> {this.renderUsers(this.state.albumData.usersInAlbum)} </p>
+        <p><b>Photos: </b>{this.state.albumData.photos.length}</p>
+        <p><b>Users:</b> {this.renderUsers(this.state.albumData.usersInAlbum)} </p>
         <Vert height='2'></Vert>
-        <PhotoGrid photos={this.state.albumData.photos} />
+        <PhotoGrid photos={this.state.albumData.photos} userDict={this.state.userDict} />
       </Pagelayout>
     );
   }

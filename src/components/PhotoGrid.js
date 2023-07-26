@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Photo } from './Photo'
 import { Modal, ModalHeader, ModalBody } from 'reactstrap';
+import './PhotoGrid.css';
 
 export class PhotoGrid extends Component {
   static displayName = PhotoGrid.name;
@@ -39,16 +40,42 @@ export class PhotoGrid extends Component {
   
         <Modal isOpen={this.state.fullScreen} toggle={toggle} size="xl">
             <ModalHeader toggle={toggle}>
-                <div style={{color: "lightgray"}}>#{this.props.photos[this.state.imageIndex].id}</div>
+              <div style={{display: "flex"}}>
+                <div style={{flex: "0"}}>
+                  #{this.props.photos[this.state.imageIndex].id}
+                </div>
+                <div style={{flex: "1", textAlign: "center", fontStyle: "italic"}}>
+                  {this.props.photos[this.state.imageIndex].caption}
+                </div>
+              </div>              
             </ModalHeader>
             <ModalBody>
-              <div style={{ width: "100%", paddingBottom: "80vh", overflow: "hidden", position: "relative", background: "#fff", cursor: "pointer" }}>
+              <div style={{ width: "100%", paddingBottom: "75vh", overflow: "hidden", position: "relative", background: "#fff" }}>
                 <img 
                   src={this.props.photos[this.state.imageIndex].url} 
                   style={{ position: "absolute", top: "50%", left: "50%", maxWidth: "100%", maxHeight: "100%", transform: "translateX(-50%) translateY(-50%)" }} 
                   alt=""
                 />
-              </div>              
+              </div>
+              <div style={{width: "100%", display: "flex", justifyContent: "space-between", alignItems: "center"}}>
+
+                <div>
+                  <img style={{width: "30px", height: "30px"}}
+                    src={"https://static.vecteezy.com/system/resources/previews/000/330/671/original/arrow-up-glyph-black-icon-vector.jpg"}
+                  />
+                  <img style={{width: "30px", height: "30px", transform: "rotate(180deg)"}}
+                    src={"https://static.vecteezy.com/system/resources/previews/000/330/671/original/arrow-up-glyph-black-icon-vector.jpg"}
+                  />
+                  <span>{this.props.photos[this.state.imageIndex].score}</span>
+                </div>               
+
+                <div>
+                  <span>Uploader: </span>
+                  <span>{this.props.userDict[this.props.photos[this.state.imageIndex].userId].name}</span>
+                </div>
+
+              </div>
+                 
             </ModalBody>
           
           

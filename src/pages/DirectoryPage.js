@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Pagelayout } from './PageLayout';
-import { Http } from '../Http';
+import Http from '../Http';
 
 export class DirectoryPage extends Component {
   static displayName = DirectoryPage.name;
