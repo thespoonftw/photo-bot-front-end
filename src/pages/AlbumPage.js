@@ -5,7 +5,7 @@ import { Vert } from 'components/Vert';
 import Http from 'tools/Http';
 import { Users } from 'tools/Users';
 import { Helper } from 'tools/Helper';
-import { Badge } from 'reactstrap';
+import { UserTag } from 'components/UserTag';
 
 export class AlbumPage extends Component {
   static displayName = AlbumPage.name;
@@ -44,16 +44,10 @@ export class AlbumPage extends Component {
 
     return <span>
       {vips.map(u => 
-          <span>
-          <Badge color="info" style={{ minWidth: '60px' }} >{u.name}</Badge>
-          <span> </span>
-          </span>
+        <UserTag user={u} />
       )}
       {others.map(u => 
-          <span>
-          <Badge style={{ minWidth: '60px' }} >{u.name}</Badge>
-          <span> </span>
-          </span>
+        <UserTag user={u} />
       )}
     </span>
   }

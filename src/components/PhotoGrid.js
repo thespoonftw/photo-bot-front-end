@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Photo } from './Photo'
 import { Modal, ModalHeader, ModalBody } from 'reactstrap';
 import './PhotoGrid.css';
+import { UserTag } from 'components/UserTag';
 
 export class PhotoGrid extends Component {
   static displayName = PhotoGrid.name;
@@ -70,8 +71,8 @@ export class PhotoGrid extends Component {
                 </div>               
 
                 <div>
-                  <span>Uploader: </span>
-                  <span>{this.props.userDict[this.props.photos[this.state.imageIndex].userId].name}</span>
+                  <span>By: </span>
+                  <UserTag user={this.props.userDict[this.props.photos[this.state.imageIndex].userId]} />
                 </div>
 
               </div>
