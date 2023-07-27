@@ -12,7 +12,7 @@ export class DirectoryPage extends Component {
   }
 
   async componentDidMount() {
-    const data = await Http.getAllPhotos();
+    const data = await Http.getAlbums();
     this.setState({ albumData: data, loading: false });
   }
 

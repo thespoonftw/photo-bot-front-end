@@ -10,11 +10,16 @@ export class PhotoGrid extends Component {
 
   constructor(props) {
       super(props);
-      this.state = { fullScreen: false, imageIndex: 0 };
+      this.state = { fullScreen: false, imageIndex: 0, loading: true };
   }
 
   clickImage(index) {
     this.setState({ fullScreen: true, imageIndex: index });
+  }
+
+  async componentDidMount() {
+    const userDict = await Users.getUserDict();
+    this.setState({ userDict: userDict, loading: false });
   }
 
   render() {
@@ -25,6 +30,9 @@ export class PhotoGrid extends Component {
     const toggle = () => this.setState({ fullScreen: !this.state.fullScreen });
   
     return (
+      this.state.loading 
+      ? <p><em>Loading...</em></p>
+      :
       <div className="container">
         {rows.map(y => 
           <div className="row" key={y}>
@@ -62,10 +70,10 @@ export class PhotoGrid extends Component {
               <div style={{width: "100%", display: "flex", justifyContent: "space-between", alignItems: "center"}}>
 
                 <div>
-                  <img style={{width: "30px", height: "30px"}}
+                  <img style={{width: "30px", height: "30px"}} alt=""
                     src={"https://static.vecteezy.com/system/resources/previews/000/330/671/original/arrow-up-glyph-black-icon-vector.jpg"}
                   />
-                  <img style={{width: "30px", height: "30px", transform: "rotate(180deg)"}}
+                  <img style={{width: "30px", height: "30px", transform: "rotate(180deg)"}} alt=""
                     src={"https://static.vecteezy.com/system/resources/previews/000/330/671/original/arrow-up-glyph-black-icon-vector.jpg"}
                   />
                   <span>{this.props.photos[this.state.imageIndex].score}</span>
@@ -74,7 +82,7 @@ export class PhotoGrid extends Component {
                 <div>
                   <span>By: </span>
                   <UserTag 
-                    user={this.props.userDict[this.props.photos[this.state.imageIndex].userId]} 
+                    user={this.state.userDict[this.props.photos[this.state.imageIndex].userId]} 
                     isActive={Users.getUser().id === this.props.photos[this.state.imageIndex].userId}
                   />
                 </div>
@@ -86,7 +94,7 @@ export class PhotoGrid extends Component {
           
         </Modal>
   
-      </div>      
+      </div>     
     );
   }
 

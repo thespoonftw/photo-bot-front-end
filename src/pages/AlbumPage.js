@@ -17,9 +17,7 @@ export class AlbumPage extends Component {
 
   async componentDidMount() {
     const albumData = await Http.getAlbumData(this.props.match.params.name);
-    const userDict = await Users.getUserDict();
-    //console.log(userData);
-    this.setState({ albumData: albumData, userDict: userDict, loading: false });
+    this.setState({ albumData: albumData, loading: false });
   }
 
   render () {
@@ -32,21 +30,22 @@ export class AlbumPage extends Component {
         <p><b>Photos: </b>{this.state.albumData.photos.length}</p>
         <p><b>Users:</b> {this.renderUsers(this.state.albumData.usersInAlbum)} </p>
         <Vert height='2'></Vert>
-        <PhotoGrid photos={this.state.albumData.photos} userDict={this.state.userDict} />
+        <PhotoGrid photos={this.state.albumData.photos}/>
       </Pagelayout>
     );
   }
 
-  renderUsers(users) {
+  renderUsers(userIds) {
 
     const user = Users.getUser();
+    const users = Users.getUsersFromIds(userIds);
 
-    const vips = users.filter((u) => u.level >= 1 && u != user).sort((a, b) => a.name.localeCompare(b.name));
-    const others = users.filter((u) => u.level < 1 && u != user).sort((a, b) => a.name.localeCompare(b.name));
+    const vips = users.filter((u) => u.level >= 1 && u.id !== user.id);
+    const others = users.filter((u) => u.level < 1 && u.id !== user.id);
 
     return <span>
       {
-        user
+        userIds.includes(user.id)
         ?
         <UserTag user={user} isActive={true} />
         :

@@ -1,8 +1,13 @@
 
 class Http {
 
-  static async getAllPhotos() {
+  static async getAlbums() {
     const response = await fetch('album');
+    return await response.json();
+  }
+
+  static async getPhotosByUser(userId) {
+    const response = await fetch('photosByUser/' + userId);
     return await response.json();
   }
 

@@ -2,14 +2,19 @@ import Http from "tools/Http";
 
 export class Users {
 
-  static users;
+  static usersList;
+  static usersDict;
   static user;
   static loadedUser;
   
   static async fetchUsers() {
-    if (!this.users) {
+    if (!this.usersList) {
       const unsorted = await Http.getAllUsers();
-      this.users = unsorted.sort((a, b) => a.name.localeCompare(b.name));
+      this.usersList = unsorted.sort((a, b) => a.name.localeCompare(b.name));
+      this.usersDict = this.usersList.reduce((acc, user) => {
+        acc[user.id] = user;
+        return acc;
+      }, {});
     }
   }
 
@@ -23,16 +28,17 @@ export class Users {
   static async getUserDict() {
     await this.fetchUsers();
 
-    return this.users.reduce((acc, user) => {
-      acc[user.id] = user;
-      return acc;
-    }, {});
+    return this.usersDict;
+  }
+
+  static getUsersFromIds(ids) {
+    return ids.map((id) => this.usersDict[id]).sort((a, b) => a.name.localeCompare(b.name));
   }
 
   static async getActiveUsers() {
     await this.fetchUsers();
 
-    return this.users.filter((user) => user.level >= 1);
+    return this.usersList.filter((user) => user.level >= 1);
   }
 
   static setUser(user) {

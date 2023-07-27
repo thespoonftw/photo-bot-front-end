@@ -18,11 +18,11 @@ export class Layout extends Component {
           </Container>
         </div>
         <div className="footer">
-          <Vert height='3'></Vert>
+          <Vert height='2'></Vert>
             <center>          
-              <p>Footer</p>
+              <p>Brunch !</p>
             </center>
-          <Vert height='3'></Vert>
+          <Vert height='2'></Vert>
         </div>
       </div>
     );

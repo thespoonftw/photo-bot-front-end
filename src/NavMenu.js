@@ -49,7 +49,17 @@ export class NavMenu extends Component {
                   }
                 </div>
                 <div>
-                  <span><NavLink to="/" className="navMenuItem" activeClassName="navMenuItemActive" exact>Home</NavLink></span>
+                  <span><NavLink to="/" className="navMenuItem" activeClassName="navMenuItemActive" exact>Albums</NavLink></span>                  
+                  {
+                    Users.getUser()
+                    ?
+                    <>
+                      <span> • </span>
+                      <span><NavLink to="/uploads" className="navMenuItem" activeClassName="navMenuItemActive" exact>Uploads</NavLink></span> 
+                    </>
+                    :
+                    null
+                  }
                   <span> • </span>
                   <span><NavLink to="/login" className="navMenuItem" activeClassName="navMenuItemActive" exact>Login</NavLink></span>
                   {
