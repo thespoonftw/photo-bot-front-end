@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 //import './NavMenu.css';
 //import { NavLink } from './components/NavLink';
 import { NavLink } from 'react-router-dom';
-import { Users } from './Users';
+import { Users } from 'tools/Users';
 import './Common.css';
 
 export class NavMenu extends Component {

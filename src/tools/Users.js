@@ -1,4 +1,4 @@
-import Http from "./Http";
+import Http from "tools/Http";
 
 export class Users {
 

@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { PhotoGrid } from 'components/PhotoGrid';
-import { Pagelayout } from './PageLayout';
+import { Pagelayout } from 'components/PageLayout';
 import { Vert } from 'components/Vert';
-import Http from '../Http';
-import { Users } from '../Users';
-import { Helper } from '../Helper';
+import Http from 'tools/Http';
+import { Users } from 'tools/Users';
+import { Helper } from 'tools/Helper';
 import { Badge } from 'reactstrap';
 
 export class AlbumPage extends Component {

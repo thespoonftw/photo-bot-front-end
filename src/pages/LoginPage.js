@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Pagelayout } from './PageLayout';
+import { Pagelayout } from 'components/PageLayout';
 import { Badge } from 'reactstrap';
-import { Users } from '../Users';
+import { Users } from 'tools/Users';
 
 export class LoginPage extends Component {
   static displayName = LoginPage.name;
