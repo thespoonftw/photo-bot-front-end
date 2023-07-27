@@ -39,10 +39,19 @@ export class AlbumPage extends Component {
 
   renderUsers(users) {
 
-    const vips = users.filter((u) => u.level >= 1);
-    const others = users.filter((u) => u.level < 1);
+    const user = Users.getUser();
+
+    const vips = users.filter((u) => u.level >= 1 && u != user).sort((a, b) => a.name.localeCompare(b.name));
+    const others = users.filter((u) => u.level < 1 && u != user).sort((a, b) => a.name.localeCompare(b.name));
 
     return <span>
+      {
+        user
+        ?
+        <UserTag user={user} isActive={true} />
+        :
+        null
+      }
       {vips.map(u => 
         <UserTag user={u} />
       )}

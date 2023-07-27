@@ -6,6 +6,8 @@ import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Users } from 'tools/Users';
 import './Common.css';
+import { Container } from 'reactstrap';
+import { UserTag } from './components/UserTag';
 
 export class NavMenu extends Component {
   static displayName = NavMenu.name;
@@ -30,21 +32,23 @@ export class NavMenu extends Component {
       <header>        
         <div style={{ backgroundColor: "#dddddd" }}>
           <br></br>
-          <div className="container">
-            <div className="row">
-              <div className="col-md">
-                <div className="row" style={{display: "table"}}>
-                  <div style={{ display: "table-cell", verticalAlign: "middle" }}>
-                    <span style={{ fontSize: "32px" }}><b>Discord PhotoBot</b></span>
-                  </div>
-                </div>
-              </div>
+          <Container>
 
-              <div className="col-md" style={{display: "table"}}>
-                <span style={{ fontSize: "18px", display: "table-cell", verticalAlign: "middle", textAlign: "right" }}>
-                  
-                  <br></br>
-                  <br></br>
+            <div style={{display: "flex", justifyContent: "space-between"}}>
+
+              <div style={{ fontSize: "32px" }}><b>Discord PhotoBot</b></div>
+            
+              <div>
+                <div style={{display: "flex", justifyContent: "flex-end"}}>
+                  {
+                    Users.getUser() 
+                    ?
+                    <UserTag user={Users.getUser()} isActive={true} />
+                    :
+                    <span>&nbsp;</span>
+                  }
+                </div>
+                <div>
                   <span><NavLink to="/" className="navMenuItem" activeClassName="navMenuItemActive" exact>Home</NavLink></span>
                   <span> • </span>
                   <span><NavLink to="/login" className="navMenuItem" activeClassName="navMenuItemActive" exact>Login</NavLink></span>
@@ -58,10 +62,14 @@ export class NavMenu extends Component {
                     :
                     null
                   }
-                </span>                
+                </div>
+                
               </div>
             </div>
-          </div>
+
+            <br></br>
+            
+          </Container>
           <br></br>
         </div>
       </header>

@@ -10,7 +10,7 @@ export class UserTag extends Component {
         let name = "";
         let cursor = "auto";
 
-        if (this.props.isSelected) {
+        if (this.props.isActive) {
             color = "warning";
         }
         else if (this.props.user && this.props.user.level >= 1) {
@@ -25,7 +25,7 @@ export class UserTag extends Component {
 
         return (
             <span>
-                <Badge color={color} style={{ minWidth: '60px', cursor: cursor }} onClick={this.props.onClick} >{name}</Badge>
+                <Badge color={color} style={{ minWidth: '70px', cursor: cursor }} onClick={this.props.onClick} >{name}</Badge>
                 <span> </span>
             </span>
         );

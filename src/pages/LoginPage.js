@@ -38,7 +38,7 @@ export class LoginPage extends Component {
     return <>
       <p>User:</p>
       {this.state.users.map(u => 
-        <UserTag user={u} onClick={() => this.selectUser(u)} isSelected={u == this.state.selectedUser} />
+        <UserTag user={u} onClick={() => this.selectUser(u)} isActive={u === this.state.selectedUser} />
       )}
       <br/>
       <br/>
@@ -61,7 +61,7 @@ export class LoginPage extends Component {
 
   renderLogout() {
     return <>
-      Logged in as: <UserTag user={Users.getUser()} />
+      Logged in as: &nbsp;&nbsp;<UserTag user={Users.getUser()} isActive={true} />
       <br/>
       <br/>
       <button onClick={() => this.logout()} style={{width: "200px"}}>Logout</button>
@@ -75,7 +75,7 @@ export class LoginPage extends Component {
   tryLogin() {
     const password = this.passwordRef.current.value;
 
-    if (password == this.state.selectedUser.name) {
+    if (password === this.state.selectedUser.name) {
       this.login(this.state.selectedUser);
     } else {
       this.setState({incorrectPassword: true});

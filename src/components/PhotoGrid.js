@@ -3,6 +3,7 @@ import { Photo } from './Photo'
 import { Modal, ModalHeader, ModalBody } from 'reactstrap';
 import './PhotoGrid.css';
 import { UserTag } from 'components/UserTag';
+import { Users } from 'tools/Users';
 
 export class PhotoGrid extends Component {
   static displayName = PhotoGrid.name;
@@ -72,7 +73,10 @@ export class PhotoGrid extends Component {
 
                 <div>
                   <span>By: </span>
-                  <UserTag user={this.props.userDict[this.props.photos[this.state.imageIndex].userId]} />
+                  <UserTag 
+                    user={this.props.userDict[this.props.photos[this.state.imageIndex].userId]} 
+                    isActive={Users.getUser().id === this.props.photos[this.state.imageIndex].userId}
+                  />
                 </div>
 
               </div>
