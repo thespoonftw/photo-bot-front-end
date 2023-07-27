@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { PhotoGrid } from '../components/PhotoGrid';
+import { PhotoGrid } from 'components/PhotoGrid';
 import { Pagelayout } from './PageLayout';
-import { Vert } from '../components/Vert';
+import { Vert } from 'components/Vert';
 import Http from '../Http';
+import { Users } from '../Users';
 import { Helper } from '../Helper';
 import { Badge } from 'reactstrap';
 
@@ -16,7 +17,7 @@ export class AlbumPage extends Component {
 
   async componentDidMount() {
     const albumData = await Http.getAlbumData(this.props.match.params.name);
-    const userDict = await Http.getAllUsersDict();
+    const userDict = await Users.getUserDict();
     //console.log(userData);
     this.setState({ albumData: albumData, userDict: userDict, loading: false });
   }

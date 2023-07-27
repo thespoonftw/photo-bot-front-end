@@ -1,10 +1,10 @@
-import React, { Component, createContext } from 'react';
+import React, { Component } from 'react';
 import { Route } from 'react-router';
 import { Layout } from './Layout';
-import { LoginPage } from './pages/LoginPage';
-import { TestPage } from './pages/TestPage';
-import { DirectoryPage } from './pages/DirectoryPage';
-import { AlbumPage } from './pages/AlbumPage';
+import { LoginPage } from 'pages/LoginPage';
+import { TestPage } from 'pages/TestPage';
+import { DirectoryPage } from 'pages/DirectoryPage';
+import { AlbumPage } from 'pages/AlbumPage';
 import './custom.css'
 
 export default class App extends Component {

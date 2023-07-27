@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 //import './NavMenu.css';
 //import { NavLink } from './components/NavLink';
 import { NavLink } from 'react-router-dom';
+import { Users } from './Users';
 import './Common.css';
 
 export class NavMenu extends Component {
@@ -47,8 +48,16 @@ export class NavMenu extends Component {
                   <span><NavLink to="/" className="navMenuItem" activeClassName="navMenuItemActive" exact>Home</NavLink></span>
                   <span> • </span>
                   <span><NavLink to="/login" className="navMenuItem" activeClassName="navMenuItemActive" exact>Login</NavLink></span>
-                  <span> • </span>
-                  <span><NavLink to="/test" className="navMenuItem" activeClassName="navMenuItemActive" exact>Test</NavLink></span>
+                  {
+                    Users.isAdmin()
+                    ?
+                    <>
+                      <span> • </span>
+                      <span><NavLink to="/test" className="navMenuItem" activeClassName="navMenuItemActive" exact>Test</NavLink></span> 
+                    </>
+                    :
+                    null
+                  }
                 </span>                
               </div>
             </div>

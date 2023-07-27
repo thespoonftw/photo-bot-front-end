@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Vert } from '../components/Vert';
+import { Vert } from 'components/Vert';
 import { Container } from 'reactstrap';
 
 export class Pagelayout extends Component {

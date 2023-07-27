@@ -17,15 +17,7 @@ class Http {
   static async getAllUsers() {
     const response = await fetch('user');
     return await response.json();
-  }
-
-  static async getAllUsersDict() {
-    const json = await this.getAllUsers();
-    return json.reduce((acc, user) => {
-      acc[user.id] = user;
-      return acc;
-    }, {});
-  }
+  }  
 }
 
 export default Http;

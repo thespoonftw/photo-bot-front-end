@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { FetchData } from '../components/FetchData';
-import { Upload } from '../components/Upload';
-import { Vert } from '../components/Vert';
+import { FetchData } from 'components/FetchData';
+import { Upload } from 'components/Upload';
+import { Vert } from 'components/Vert';
 import { Pagelayout } from './PageLayout';
 
 export class TestPage extends Component {

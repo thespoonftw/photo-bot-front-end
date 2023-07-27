@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Container } from 'reactstrap';
 //import { NoMobile } from './components/NoMobile';
 import { NavMenu } from './NavMenu';
-import { Vert } from './components/Vert';
+import { Vert } from 'components/Vert';
 
 export class Layout extends Component {
   static displayName = Layout.name;
