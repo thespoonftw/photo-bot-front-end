@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
-export class Photo extends Component {
-    static displayName = Photo.name;
+export class PhotoThumbnail extends Component {
+    static displayName = PhotoThumbnail.name;
 
     constructor(props){
         super(props);
