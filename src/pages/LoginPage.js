@@ -8,20 +8,18 @@ export class LoginPage extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { users: [], loading: true };
+    this.state = { users: null };
     this.passwordRef = React.createRef();
   } 
 
   async componentDidMount() {
     const users = await Users.getActiveUsers();
-    this.setState({ users: users, loading: false });
+    this.setState({ users: users });
   }
 
   render () {
-    return (
-      this.state.loading 
-      ? <p><em>Loading...</em></p>
-      :
+    return <>{ this.state.users && (
+
       <Pagelayout Title="Login">
         { 
           Users.getUser()
@@ -31,7 +29,8 @@ export class LoginPage extends Component {
           this.renderLogin()
         }
       </Pagelayout>
-    );
+
+    )}</>
   }
 
   renderLogin() {

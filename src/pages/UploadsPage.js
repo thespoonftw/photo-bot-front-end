@@ -10,25 +10,24 @@ export class UploadsPage extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { albumData: [], loading: true };
+    this.state = { photoList: null };
   }
 
   async componentDidMount() {
     const photoList = await Http.getPhotosByUser(Users.getUser().id);
-    this.setState({ loading: false, photoList: photoList });
+    this.setState({ photoList: photoList });
   }
 
   render () {
-    return (
-      this.state.loading 
-      ? <p><em>Loading...</em></p>
-      :
+    return <>{ this.state.photoList && (
+
       <Pagelayout Title="My Uploads" >
         <p><b>Photos: </b>{this.state.photoList.length}</p>
         <Vert height='2'></Vert>
         <PhotoGrid photos={this.state.photoList} />
         
       </Pagelayout>
-    );
+
+    )}</>
   }
 }

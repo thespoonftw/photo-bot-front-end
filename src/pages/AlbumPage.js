@@ -12,19 +12,17 @@ export class AlbumPage extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { albumData: [], loading: true };
+    this.state = { albumData: null };
   }
 
   async componentDidMount() {
     const albumData = await Http.getAlbumData(this.props.match.params.name);
-    this.setState({ albumData: albumData, loading: false });
+    this.setState({ albumData: albumData });
   }
 
   render () {
-    return (
-      this.state.loading 
-      ? <p><em>Loading...</em></p>
-      :
+    return <>{ this.state.albumData && (
+      
       <Pagelayout Title={this.state.albumData.album.name} Return={true} >
         <p><b>Date:</b> {Helper.getMonth(this.state.albumData.album.month)} {this.state.albumData.album.year}</p>
         <p><b>Photos: </b>{this.state.albumData.photos.length}</p>
@@ -32,7 +30,8 @@ export class AlbumPage extends Component {
         <Vert height='2'></Vert>
         <PhotoGrid photos={this.state.albumData.photos}/>
       </Pagelayout>
-    );
+
+    )}</>
   }
 
   renderUsers(userIds) {

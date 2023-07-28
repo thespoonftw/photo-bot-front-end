@@ -8,19 +8,17 @@ export class DirectoryPage extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { albumData: [], loading: true };
+    this.state = { albumData: [] };
   }
 
   async componentDidMount() {
     const data = await Http.getAlbums();
-    this.setState({ albumData: data, loading: false });
+    this.setState({ albumData: data });
   }
 
   render () {
-    return (
-      this.state.loading 
-      ? <p><em>Loading...</em></p>
-      :
+    return <>{ this.state.albumData && (
+
       <Pagelayout Title="Albums">
         <ul>
           {
@@ -30,6 +28,7 @@ export class DirectoryPage extends Component {
           }
         </ul>
       </Pagelayout>
-    );
+      
+    )}</>
   }
 }
