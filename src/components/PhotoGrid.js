@@ -55,6 +55,7 @@ export class PhotoGrid extends Component {
           photo={this.props.photos[this.state.imageIndex]} 
           next={this.nextPhoto}
           prev={this.previousPhoto}
+          users={this.props.users}
         />
   
       </div>     

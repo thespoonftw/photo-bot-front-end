@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { PhotoGrid } from 'components/PhotoGrid';
 import { Pagelayout } from 'components/PageLayout';
 import { Vert } from 'components/Vert';
-import Http from 'tools/Http';
-import { Users } from 'tools/Users';
+import { Http } from 'tools/Http';
+import { User } from 'tools/User';
 
 export class UploadsPage extends Component {
   static displayName = UploadsPage.name;
@@ -14,8 +14,9 @@ export class UploadsPage extends Component {
   }
 
   async componentDidMount() {
-    const photoList = await Http.getPhotosByUser(Users.getUser().id);
-    this.setState({ photoList: photoList });
+    const photoList = Http.getPhotosByUser(User.getUser().id);
+    const users = Http.getUsers();
+    this.setState({ photoList: await photoList, users: await users });
   }
 
   render () {
@@ -24,7 +25,7 @@ export class UploadsPage extends Component {
       <Pagelayout Title="My Uploads" >
         <p><b>Photos: </b>{this.state.photoList.length}</p>
         <Vert height='2'></Vert>
-        <PhotoGrid photos={this.state.photoList} />
+        <PhotoGrid photos={this.state.photoList} users={this.state.users} />
         
       </Pagelayout>
 

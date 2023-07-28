@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 //import './NavMenu.css';
 //import { NavLink } from './components/NavLink';
 import { NavLink } from 'react-router-dom';
-import { Users } from 'tools/Users';
+import { User } from 'tools/User';
 import './Common.css';
 import { Container } from 'reactstrap';
 import { UserTag } from './components/UserTag';
@@ -41,9 +41,9 @@ export class NavMenu extends Component {
               <div>
                 <div style={{display: "flex", justifyContent: "flex-end"}}>
                   {
-                    Users.getUser() 
+                    User.getUser() 
                     ?
-                    <UserTag user={Users.getUser()} isActive={true} />
+                    <UserTag user={User.getUser()} isActive={true} />
                     :
                     <span>&nbsp;</span>
                   }
@@ -51,7 +51,7 @@ export class NavMenu extends Component {
                 <div>
                   <span><NavLink to="/" className="navMenuItem" activeClassName="navMenuItemActive" exact>Albums</NavLink></span>                  
                   {
-                    Users.getUser()
+                    User.getUser()
                     ?
                     <>
                       <span> • </span>
@@ -63,7 +63,7 @@ export class NavMenu extends Component {
                   <span> • </span>
                   <span><NavLink to="/login" className="navMenuItem" activeClassName="navMenuItemActive" exact>Login</NavLink></span>
                   {
-                    Users.isAdmin()
+                    User.isAdmin()
                     ?
                     <>
                       <span> • </span>

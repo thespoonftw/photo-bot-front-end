@@ -1,5 +1,7 @@
 
-class Http {
+import { Users } from "tools/Users";
+
+export class Http {
 
   static async getAlbums() {
     const response = await fetch('album');
@@ -19,10 +21,10 @@ class Http {
     return json;
   }
 
-  static async getAllUsers() {
+  static async getUsers() {
     const response = await fetch('user');
-    return await response.json();
+    const json = await response.json();
+    return new Users(json);
   }  
 }
 
-export default Http;

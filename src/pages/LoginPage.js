@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Pagelayout } from 'components/PageLayout';
-import { Users } from 'tools/Users';
+import { User } from 'tools/User'
+import { Http } from 'tools/Http';
 import { UserTag } from 'components/UserTag';
 
 export class LoginPage extends Component {
@@ -13,7 +14,7 @@ export class LoginPage extends Component {
   } 
 
   async componentDidMount() {
-    const users = await Users.getActiveUsers();
+    const users = await Http.getUsers();
     this.setState({ users: users });
   }
 
@@ -22,7 +23,7 @@ export class LoginPage extends Component {
 
       <Pagelayout Title="Login">
         { 
-          Users.getUser()
+          User.getUser()
           ?
           this.renderLogout() 
           :
@@ -36,7 +37,7 @@ export class LoginPage extends Component {
   renderLogin() {
     return <>
       <p>User:</p>
-      {this.state.users.map(u => 
+      {this.state.users.getActive().map(u => 
         <UserTag user={u} onClick={() => this.selectUser(u)} isActive={u === this.state.selectedUser} />
       )}
       <br/>
@@ -60,7 +61,7 @@ export class LoginPage extends Component {
 
   renderLogout() {
     return <>
-      Logged in as: &nbsp;&nbsp;<UserTag user={Users.getUser()} isActive={true} />
+      Logged in as: &nbsp;&nbsp;<UserTag user={User.getUser()} isActive={true} />
       <br/>
       <br/>
       <button onClick={() => this.logout()} style={{width: "200px"}}>Logout</button>
@@ -82,12 +83,12 @@ export class LoginPage extends Component {
   }
 
   login(user) {
-    Users.setUser(user);
+    User.setUser(user);
     window.location.reload();
   }
 
   logout() {
-    Users.setUser();
+    User.setUser();
     window.location.reload();
   }
 }

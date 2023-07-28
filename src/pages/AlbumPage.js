@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { PhotoGrid } from 'components/PhotoGrid';
 import { Pagelayout } from 'components/PageLayout';
 import { Vert } from 'components/Vert';
-import Http from 'tools/Http';
-import { Users } from 'tools/Users';
+import { Http } from 'tools/Http';
+import { User } from 'tools/User';
 import { Helper } from 'tools/Helper';
 import { UserTag } from 'components/UserTag';
 
@@ -16,8 +16,9 @@ export class AlbumPage extends Component {
   }
 
   async componentDidMount() {
-    const albumData = await Http.getAlbumData(this.props.match.params.name);
-    this.setState({ albumData: albumData });
+    const albumData = Http.getAlbumData(this.props.match.params.name);
+    const users = Http.getUsers();
+    this.setState({ albumData: await albumData, users: await users });
   }
 
   render () {
@@ -28,7 +29,7 @@ export class AlbumPage extends Component {
         <p><b>Photos: </b>{this.state.albumData.photos.length}</p>
         <p><b>Users:</b> {this.renderUsers(this.state.albumData.usersInAlbum)} </p>
         <Vert height='2'></Vert>
-        <PhotoGrid photos={this.state.albumData.photos}/>
+        <PhotoGrid photos={this.state.albumData.photos} users={this.state.users}/>
       </Pagelayout>
 
     )}</>
@@ -36,8 +37,8 @@ export class AlbumPage extends Component {
 
   renderUsers(userIds) {
 
-    const user = Users.getUser();
-    const users = Users.getUsersFromIds(userIds);
+    const user = User.getUser();
+    const users = this.state.users.getUsersFromIds(userIds);
 
     const vips = users.filter((u) => u.level >= 1 && u.id !== user.id);
     const others = users.filter((u) => u.level < 1 && u.id !== user.id);
