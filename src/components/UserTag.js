@@ -6,7 +6,7 @@ export class UserTag extends Component {
 
     render() {
 
-        let color = "secondary";
+        let color = "light";
         let name = "";
         let cursor = "auto";
 
@@ -14,7 +14,7 @@ export class UserTag extends Component {
             color = "warning";
         }
         else if (this.props.user && this.props.user.level >= 1) {
-            color = "info";
+            color = "primary";
         }
         if (this.props.user) {
             name = this.props.user.name;

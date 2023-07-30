@@ -15,8 +15,9 @@ export class UploadsPage extends Component {
 
   async componentDidMount() {
     const photoList = Http.getPhotosByUser(User.getUser().id);
+    const albums = Http.getAlbumDict();
     const users = Http.getUsers();
-    this.setState({ photoList: await photoList, users: await users });
+    this.setState({ photoList: await photoList, users: await users, albums: await albums });
   }
 
   render () {
@@ -25,7 +26,7 @@ export class UploadsPage extends Component {
       <Pagelayout Title="My Uploads" >
         <p><b>Photos: </b>{this.state.photoList.length}</p>
         <Vert height='2'></Vert>
-        <PhotoGrid photos={this.state.photoList} users={this.state.users} />
+        <PhotoGrid photos={this.state.photoList} users={this.state.users} albums={this.state.albums} />
         
       </Pagelayout>
 

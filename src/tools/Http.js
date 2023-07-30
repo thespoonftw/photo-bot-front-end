@@ -3,8 +3,17 @@ import { Users } from "tools/Users";
 
 export class Http {
 
-  static async getAlbums() {
+  static async getAlbumDict() {
     const response = await fetch('album');
+    const json = await response.json();
+    return json.reduce((x, album) => {
+      x[album.id] = album;
+      return x;
+    }, {});
+  }
+
+  static async getAlbumList() {
+    const response = await fetch('albumList');
     return await response.json();
   }
 
@@ -14,10 +23,8 @@ export class Http {
   }
 
   static async getAlbumData(album_url) {
-    console.log(album_url);
     const response = await fetch('album/' + album_url); 
     const json = await response.json();
-    console.log(json);   
     return json;
   }
 

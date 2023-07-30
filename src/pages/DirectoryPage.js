@@ -2,32 +2,62 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Pagelayout } from 'components/PageLayout';
 import { Http } from 'tools/Http';
+import { AlbumTag } from '../components/AlbumTag';
+import { Vert } from 'components/Vert';
 
 export class DirectoryPage extends Component {
   static displayName = DirectoryPage.name;
 
   constructor(props) {
     super(props);
-    this.state = { albumData: [] };
+    this.state = { loaded: false };
   }
 
   async componentDidMount() {
-    const data = await Http.getAlbums();
-    this.setState({ albumData: data });
+    const albums = await Http.getAlbumList();
+    
+    const featured = albums.filter(a => a.numberOfPhotos >= 10);
+    const mini = albums.filter(a => a.numberOfPhotos < 10);
+
+    const f_years = Array.from(new Set(featured.map(a => a.year))).filter(y => y != 0);
+    const m_years = Array.from(new Set(mini.map(a => a.year))).filter(y => y != 0);
+
+    this.setState({ loaded: true, featured: featured, mini: mini, f_years: f_years, m_years: m_years });
   }
 
   render () {
-    return <>{ this.state.albumData && (
+    return <>{ this.state.loaded && (
+        <Pagelayout>
 
-      <Pagelayout Title="Albums">
-        <ul>
-          {
-            this.state.albumData.map(a => 
-              <li key={a.id}><Link to={"/album/" + a.name.replace(/ /g, "_") + "_" + a.year} style={{fontSize: "20px"}} >{a.year} - {a.name}</Link></li>
-            )
-          }
-        </ul>
-      </Pagelayout>
+          <h3>Albums</h3>
+          <Vert height='1'></Vert>
+          
+          { this.state.f_years.map(y =>
+            <>
+              <p><b>{y}</b></p>
+              { this.state.featured.filter(a => a.year == y).map(a => 
+                <div key={a.id}><Link to={"/album/" + a.name.replace(/ /g, "_") + "_" + a.year} style={{fontSize: "20px"}} ><AlbumTag name={a.name}/></Link></div>
+              )}
+              <Vert />
+            </>
+          )}          
+          
+          <Vert height='5'></Vert>
+          <h3>Mini Albums</h3>
+          <Vert height='1'></Vert>
+
+          { this.state.m_years.map(y =>
+            <>
+              <p><b>{y}</b></p>
+              { this.state.mini.filter(a => a.year == y).map(a => 
+                <div key={a.id}><Link to={"/album/" + a.name.replace(/ /g, "_") + "_" + a.year} style={{fontSize: "20px"}} ><AlbumTag name={a.name}/></Link></div>
+              )}
+              <Vert />
+            </>
+          )}
+          
+        </Pagelayout>
+      
       
     )}</>
   }
