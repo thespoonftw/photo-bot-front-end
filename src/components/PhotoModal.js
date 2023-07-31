@@ -2,21 +2,32 @@ import React, { Component } from 'react';
 import { User } from 'tools/User';
 import { UserTag } from 'components/UserTag';
 import { Modal, ModalHeader, ModalBody } from 'reactstrap';
-import { AlbumTag } from './AlbumTag';
+import { AlbumTag } from 'components/AlbumTag';
+import { Http } from 'tools/Http'; 
 
 export class PhotoModal extends Component {
     static displayName = PhotoModal.name;
 
     constructor(props){
         super(props);
-        this.state = {loaded: false};
-        this.state = {errored: false};
+        this.state = {loaded: false, errored: false, voteLevel: 0, loadedVotes: false, score: 0};
     }
 
-    componentDidUpdate(prevProps) {
-        if (prevProps.photo !== this.props.photo) {
-            this.setState({ loaded: false, errored: false, });
+    async componentDidUpdate(prevProps) {
+        if ((!prevProps.isOpen && this.props.isOpen) || prevProps.photo !== this.props.photo) {
+            this.setState({ loaded: false, errored: false, loadedVotes: false, score: this.props.photo.score });
+
+            if (!User.getUser()) { return; }
+            const voteLevel = await Http.getVoteLevel(User.getUser().id, this.props.photo.id);
+            this.setState({ loadedVotes: true, voteLevel: voteLevel });
         }
+    }
+
+    setVoteLevel(voteLevel) {
+        const newScore = this.state.score + voteLevel - this.state.voteLevel;
+        this.props.photo.score = newScore;
+        this.setState({voteLevel: voteLevel, score: newScore})
+        Http.putVote(this.props.photo.id, User.getUser().id, voteLevel);
     }
 
     render() {
@@ -77,14 +88,43 @@ export class PhotoModal extends Component {
                     
                 <div style={{width: "100%", display: "flex", justifyContent: "space-between", alignItems: "center"}}>
 
-                    <div>
-                    <img style={{width: "30px", height: "30px"}} alt=""
-                        src={"https://static.vecteezy.com/system/resources/previews/000/330/671/original/arrow-up-glyph-black-icon-vector.jpg"}
-                    />
-                    <img style={{width: "30px", height: "30px", transform: "rotate(180deg)"}} alt=""
-                        src={"https://static.vecteezy.com/system/resources/previews/000/330/671/original/arrow-up-glyph-black-icon-vector.jpg"}
-                    />
-                    <span>{this.props.photo.score}</span>
+                    <div style={{outline: "1px"}}>
+
+                        <span>Score: </span>
+
+                        <span style={{display: "inline-block", width: "25px", textAlign: "center", fontWeight: "bold"}}>{this.state.score}</span>
+
+                        { this.state.loadedVotes && 
+                            <>
+                                { this.state.voteLevel === 1 ?
+                                    <img style={{width: "20px", height: "20px", cursor: "pointer"}} alt=""
+                                        src={require("images/upvote.png").default}
+                                        onClick={() => this.setVoteLevel(0)}
+                                    />
+                                    :
+                                    <img style={{width: "20px", height: "20px", cursor: "pointer"}} alt=""
+                                        src={require("images/upvote2.png").default}
+                                        onClick={() => this.setVoteLevel(1)}
+                                    />
+                                }
+
+                                &nbsp;
+
+                                { this.state.voteLevel === -1 ?
+                                    <img style={{width: "20px", height: "20px", cursor: "pointer"}} alt=""
+                                        src={require("images/downvote.png").default}
+                                        onClick={() => this.setVoteLevel(0)}
+                                    />
+                                    :
+                                    <img style={{width: "20px", height: "20px", cursor: "pointer"}} alt=""
+                                        src={require("images/downvote2.png").default}
+                                        onClick={() => this.setVoteLevel(-1)}
+                                    />
+                                }
+                            </>                          
+                        }
+
+                                          
                     </div>               
 
                     <div>
@@ -106,7 +146,7 @@ export class PhotoModal extends Component {
                         <span>By: </span>
                         <UserTag 
                             user={this.props.users.getUserFromId(this.props.photo.userId)} 
-                            isActive={User.getUser().id === this.props.photo.userId}
+                            isActive={User.getUser() && User.getUser().id === this.props.photo.userId}
                         />
                     </div>
 

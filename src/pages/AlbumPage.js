@@ -24,8 +24,8 @@ export class AlbumPage extends Component {
   render () {
     return <>{ this.state.albumData && (
       
-      <Pagelayout Title={this.state.albumData.album.name} Return={true} >
-        <p><b>Date:</b> {Helper.getMonth(this.state.albumData.album.month)} {this.state.albumData.album.year}</p>
+      <Pagelayout Title={this.state.albumData.name} Return={true} >
+        <p><b>Date:</b> {Helper.getMonth(this.state.albumData.month)} {this.state.albumData.year}</p>
         <p><b>Photos: </b>{this.state.albumData.photos.length}</p>
         <p><b>Users:</b> {this.renderUsers(this.state.albumData.usersInAlbum)} </p>
         <Vert height='2'></Vert>
@@ -40,16 +40,12 @@ export class AlbumPage extends Component {
     const user = User.getUser();
     const users = this.state.users.getUsersFromIds(userIds);
 
-    const vips = users.filter((u) => u.level >= 1 && u.id !== user.id);
-    const others = users.filter((u) => u.level < 1 && u.id !== user.id);
+    const vips = users.filter((u) => u.level >= 1 && (!user || u.id !== user.id));
+    const others = users.filter((u) => u.level < 1 && (!user || u.id !== user.id));
 
     return <span>
-      {
-        userIds.includes(user.id)
-        ?
+      { user && userIds.includes(user.id) &&
         <UserTag user={user} isActive={true} />
-        :
-        null
       }
       {vips.map(u => 
         <UserTag user={u} />

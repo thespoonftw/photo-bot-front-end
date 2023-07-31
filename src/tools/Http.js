@@ -24,14 +24,34 @@ export class Http {
 
   static async getAlbumData(album_url) {
     const response = await fetch('album/' + album_url); 
-    const json = await response.json();
-    return json;
+    return await response.json();
   }
 
   static async getUsers() {
     const response = await fetch('user');
     const json = await response.json();
     return new Users(json);
-  }  
+  }
+
+  static async getVoteLevel(userId, photoId) {
+    const response = await fetch(`voteLevel?userId=${userId}&photoId=${photoId}`);
+    return await response.json();
+  }
+
+  static async putVote(photoId, userId, level) {
+    const requestOptions = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        photoId: photoId,
+        userId: userId,
+        level: level,
+      }),
+    };
+    await fetch('vote', requestOptions);
+    return;
+  }
 }
 
