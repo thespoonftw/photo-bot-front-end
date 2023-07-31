@@ -68,6 +68,8 @@ export class NavMenu extends Component {
                     <>
                       <span> • </span>
                       <span><NavLink to="/test" className="navMenuItem" activeClassName="navMenuItemActive" exact>Test</NavLink></span> 
+                      <span> • </span>
+                      <span><NavLink to="/trash" className="navMenuItem" activeClassName="navMenuItemActive" exact>Trash</NavLink></span>
                     </>
                     :
                     null

@@ -19,8 +19,8 @@ export class DirectoryPage extends Component {
     const featured = albums.filter(a => a.numberOfPhotos >= 10);
     const mini = albums.filter(a => a.numberOfPhotos < 10);
 
-    const f_years = Array.from(new Set(featured.map(a => a.year))).filter(y => y != 0);
-    const m_years = Array.from(new Set(mini.map(a => a.year))).filter(y => y != 0);
+    const f_years = Array.from(new Set(featured.map(a => a.year))).filter(y => y !== 0);
+    const m_years = Array.from(new Set(mini.map(a => a.year))).filter(y => y !== 0);
 
     this.setState({ loaded: true, featured: featured, mini: mini, f_years: f_years, m_years: m_years });
   }
@@ -35,8 +35,8 @@ export class DirectoryPage extends Component {
           { this.state.f_years.map(y =>
             <>
               <p><b>{y}</b></p>
-              { this.state.featured.filter(a => a.year == y).map(a => 
-                <div key={a.id}><Link to={"/album/" + a.name.replace(/ /g, "_") + "_" + a.year} style={{fontSize: "20px"}} ><AlbumTag name={a.name}/></Link></div>
+              { this.state.featured.filter(a => a.year === y).map(a => 
+                <div key={a.id}><Link to={"/album/" + a.name.replace(/ /g, "+")} style={{fontSize: "20px"}} ><AlbumTag name={a.name}/></Link></div>
               )}
               <Vert />
             </>
@@ -49,8 +49,8 @@ export class DirectoryPage extends Component {
           { this.state.m_years.map(y =>
             <>
               <p><b>{y}</b></p>
-              { this.state.mini.filter(a => a.year == y).map(a => 
-                <div key={a.id}><Link to={"/album/" + a.name.replace(/ /g, "_") + "_" + a.year} style={{fontSize: "20px"}} ><AlbumTag name={a.name}/></Link></div>
+              { this.state.mini.filter(a => a.year === y).map(a => 
+                <div key={a.id}><Link to={"/album/" + a.name.replace(/ /g, "+")} style={{fontSize: "20px"}} ><AlbumTag name={a.name}/></Link></div>
               )}
               <Vert />
             </>

@@ -6,6 +6,7 @@ import { TestPage } from 'pages/TestPage';
 import { UploadsPage } from 'pages/UploadsPage';
 import { DirectoryPage } from 'pages/DirectoryPage';
 import { AlbumPage } from 'pages/AlbumPage';
+import { TrashPage } from 'pages/TrashPage';
 import './custom.css'
 
 export default class App extends Component {
@@ -18,6 +19,7 @@ export default class App extends Component {
         <Route path='/login' component={LoginPage} />
         <Route path='/uploads' component={UploadsPage} />
         <Route path='/test' component={TestPage} />
+        <Route path='/trash' component={TrashPage} />
         <Route path='/album/:name' component={AlbumPage} />
       </Layout>
     );
