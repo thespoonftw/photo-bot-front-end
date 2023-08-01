@@ -98,12 +98,12 @@ export class PhotoModal extends Component {
                             <>
                                 { this.state.voteLevel === 1 ?
                                     <img style={{width: "20px", height: "20px", cursor: "pointer"}} alt=""
-                                        src={require("images/upvote.png").default}
+                                        src={"./upvote.png"}
                                         onClick={() => this.setVoteLevel(0)}
                                     />
                                     :
                                     <img style={{width: "20px", height: "20px", cursor: "pointer"}} alt=""
-                                        src={require("images/upvote2.png").default}
+                                        src={"./upvote2.png"}
                                         onClick={() => this.setVoteLevel(1)}
                                     />
                                 }
@@ -112,12 +112,12 @@ export class PhotoModal extends Component {
 
                                 { this.state.voteLevel === -1 ?
                                     <img style={{width: "20px", height: "20px", cursor: "pointer"}} alt=""
-                                        src={require("images/downvote.png").default}
+                                        src={"./downvote.png"}
                                         onClick={() => this.setVoteLevel(0)}
                                     />
                                     :
                                     <img style={{width: "20px", height: "20px", cursor: "pointer"}} alt=""
-                                        src={require("images/downvote2.png").default}
+                                        src={"./downvote2.png"}
                                         onClick={() => this.setVoteLevel(-1)}
                                     />
                                 }

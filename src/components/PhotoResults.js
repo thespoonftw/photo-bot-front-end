@@ -27,11 +27,11 @@ export class PhotoResults extends Component {
 
   sortPhotos(mode) {
     let photos;
-    if (mode == POPULAR) {
+    if (mode === POPULAR) {
       photos = this.props.photos.slice().sort((a, b) => b.score - a.score)
-    } else if (mode == NEWEST) {
+    } else if (mode === NEWEST) {
       photos = this.props.photos.slice().sort((a, b) => b.id - a.id);
-    } else if (mode == OLDEST) {
+    } else if (mode === OLDEST) {
       photos = this.props.photos.slice().sort((a, b) => a.id - b.id);
     }
     this.setState({photos: photos});    
@@ -72,7 +72,7 @@ export class PhotoResults extends Component {
   renderUsers() {
 
     const user = User.getUser();
-    const isUserInAlbum = this.props.usersInAlbum.filter((u) => u.id === user.id).length > 0;
+    const isUserInAlbum = user && this.props.usersInAlbum.filter((u) => u.id === user.id).length > 0;
     const vips = this.props.usersInAlbum.filter((u) => u.level >= 1 && (!user || u.id !== user.id));
     const others = this.props.usersInAlbum.filter((u) => u.level < 1 && (!user || u.id !== user.id));
 
