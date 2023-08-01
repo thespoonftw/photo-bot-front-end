@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
-import { PhotoGrid } from 'components/PhotoGrid';
 import { Pagelayout } from 'components/PageLayout';
-import { Vert } from 'components/Vert';
 import { Http } from 'tools/Http';
-import { User } from 'tools/User';
-import { Helper } from 'tools/Helper';
-import { UserTag } from 'components/UserTag';
+import { PhotoResults} from 'components/PhotoResults';
 
 export class AlbumPage extends Component {
   static displayName = AlbumPage.name;
@@ -16,43 +12,25 @@ export class AlbumPage extends Component {
   }
 
   async componentDidMount() {
-    const albumData = Http.getAlbumData(this.props.match.params.name);
-    const users = Http.getUsers();
-    this.setState({ albumData: await albumData, users: await users });
+    const albumData = await Http.getAlbumData(this.props.match.params.name);
+    const users = await Http.getUsers();
+    const usersInAlbum = users.getUsersFromIds(albumData.usersInAlbum)
+    this.setState({ albumData: albumData, users: users, usersInAlbum: usersInAlbum });
   }
 
   render () {
     return <>{ this.state.albumData && (
       
       <Pagelayout Title={this.state.albumData.name} Return={true} >
-        <p><b>Date:</b> {Helper.getMonth(this.state.albumData.month)} {this.state.albumData.year}</p>
-        <p><b>Photos: </b>{this.state.albumData.photos.length}</p>
-        <p><b>Users:</b> {this.renderUsers(this.state.albumData.usersInAlbum)} </p>
-        <Vert height='2'></Vert>
-        <PhotoGrid photos={this.state.albumData.photos} users={this.state.users}/>
+        <PhotoResults
+          month={this.state.albumData.month}
+          year={this.state.albumData.year}
+          users={this.state.users}
+          usersInAlbum={this.state.usersInAlbum}
+          photos={this.state.albumData.photos}
+        />
       </Pagelayout>
 
     )}</>
-  }
-
-  renderUsers(userIds) {
-
-    const user = User.getUser();
-    const users = this.state.users.getUsersFromIds(userIds);
-
-    const vips = users.filter((u) => u.level >= 1 && (!user || u.id !== user.id));
-    const others = users.filter((u) => u.level < 1 && (!user || u.id !== user.id));
-
-    return <span>
-      { user && userIds.includes(user.id) &&
-        <UserTag user={user} isActive={true} />
-      }
-      {vips.map(u => 
-        <UserTag user={u} />
-      )}
-      {others.map(u => 
-        <UserTag user={u} />
-      )}
-    </span>
   }
 }
