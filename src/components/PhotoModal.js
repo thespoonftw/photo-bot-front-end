@@ -13,6 +13,26 @@ export class PhotoModal extends Component {
         this.state = {loaded: false, errored: false, voteLevel: 0, loadedVotes: false, score: 0};
     }
 
+    componentDidMount() {
+        document.addEventListener('keydown', this.handleKeyDown);
+    }
+    
+    componentWillUnmount() {
+        document.removeEventListener('keydown', this.handleKeyDown);
+    }
+
+    handleKeyDown = (event) => {
+        if (event.keyCode === 37) { // Left
+            this.props.prev();
+        } else if (event.keyCode === 38) { // Up
+            this.setVoteLevel(1);
+        } else if (event.keyCode === 39) { // Right
+          this.props.next();
+        } else if (event.keyCode === 40) { // Down
+            this.setVoteLevel(-1);
+        }
+      };
+
     async componentDidUpdate(prevProps) {
         if ((!prevProps.isOpen && this.props.isOpen) || prevProps.photo !== this.props.photo) {
             this.setState({ loaded: false, errored: false, loadedVotes: false, score: this.props.photo.score });

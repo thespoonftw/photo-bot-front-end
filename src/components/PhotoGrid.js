@@ -11,22 +11,6 @@ export class PhotoGrid extends Component {
       this.state = { isModalOpen: false, imageIndex: 0 };
   }
 
-  componentDidMount() {
-    document.addEventListener('keydown', this.handleKeyDown);
-  }
-  
-  componentWillUnmount() {
-    document.removeEventListener('keydown', this.handleKeyDown);
-  }
-
-  handleKeyDown = (event) => {
-    if (event.keyCode === 37) { // Left arrow key
-      this.previousPhoto();
-    } else if (event.keyCode === 39) { // Right arrow key
-      this.nextPhoto();
-    }
-  };
-
   toggleModal = () => {
     this.setState({ isModalOpen: !this.state.isModalOpen });
   }
