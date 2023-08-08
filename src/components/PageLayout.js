@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Vert } from 'components/Vert';
 import { Container } from 'reactstrap';
+import { User } from 'tools/User';
 
 export class Pagelayout extends Component {
 
@@ -14,17 +15,8 @@ export class Pagelayout extends Component {
           <h3>{this.props.Title}</h3>
         }
 
-        { this.props.Return && 
-            <p
-              onClick={() => window.history.back()}
-              style={{ color: 'blue', cursor: 'pointer' }}
-              onMouseEnter={(e) => { e.target.style.textDecoration = 'underline'; }}
-              onMouseLeave={(e) => { e.target.style.textDecoration = 'none'; }}
-            >&#60;- Return</p>
-        }
-
         {
-          (this.props.Title || this.props.Return) &&
+          this.props.Title &&
             <Vert height='2'></Vert>
         }        
         

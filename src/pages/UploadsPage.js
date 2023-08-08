@@ -9,21 +9,23 @@ export class UploadsPage extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { photoList: null };
+    this.state = { photoData: null };
   }
 
   async componentDidMount() {
-    const photos = Http.getPhotosByUser(User.getUser().id);
+    
     const albums = Http.getAlbumDict();
     const users = Http.getUsers();
-    this.setState({ photos: await photos, users: await users, albums: await albums });
+    const photoData = await Http.getPhotosByUser(User.getUser().id);
+    
+    this.setState({ photoData: photoData, users: await users, albums: await albums });
   }
 
   render () {
-    return <>{ this.state.photos && (
+    return <>{ this.state.photoData && (
 
       <Pagelayout Title="My Uploads" >
-        <PhotoResults photos={this.state.photos} users={this.state.users} albums={this.state.albums} />        
+        <PhotoResults photos={this.state.photoData.photos} users={this.state.users} albums={this.state.albums} />        
       </Pagelayout>
 
     )}</>

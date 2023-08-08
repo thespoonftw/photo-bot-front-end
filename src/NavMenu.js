@@ -48,20 +48,20 @@ export class NavMenu extends Component {
                     <span>&nbsp;</span>
                   }
                 </div>
-                <div>
-                  <span><NavLink to="/" className="navMenuItem" activeClassName="navMenuItemActive" exact>Albums</NavLink></span>                  
+                <div>                  
+                  <span><NavLink to="/" className="navMenuItem" activeClassName="navMenuItemActive" exact>Login</NavLink></span>
                   {
                     User.getUser()
                     ?
                     <>
                       <span> • </span>
-                      <span><NavLink to="/uploads" className="navMenuItem" activeClassName="navMenuItemActive" exact>Uploads</NavLink></span> 
+                      <span><NavLink to="/albums" className="navMenuItem" activeClassName="navMenuItemActive" exact>Albums</NavLink></span>
+                      <span> • </span>
+                      <span><NavLink to="/uploads" className="navMenuItem" activeClassName="navMenuItemActive" exact>Uploads</NavLink></span>                      
                     </>
                     :
                     null
                   }
-                  <span> • </span>
-                  <span><NavLink to="/login" className="navMenuItem" activeClassName="navMenuItemActive" exact>Login</NavLink></span>
                   {
                     User.isAdmin()
                     ?
