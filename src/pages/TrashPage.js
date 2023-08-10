@@ -13,7 +13,7 @@ export class TrashPage extends Component {
   }
 
   async componentDidMount() {
-    const albumData = Http.getAlbumData("Trash");
+    const albumData = Http.getTrashPhotos();
     const users = Http.getUsers();
     this.setState({ users: await users, albumData: await albumData });
   }

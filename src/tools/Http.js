@@ -27,6 +27,11 @@ export class Http {
     return await response.json();
   }
 
+  static async getTrashPhotos() {
+    const response = await fetch('trash'); 
+    return await response.json();
+  }
+
   static async getUsers() {
     const response = await fetch('user');
     const json = await response.json();
@@ -38,20 +43,53 @@ export class Http {
     return await response.json();
   }
 
+  static async sendToTrash(photoId) {
+    const response = await this.post(`trash/${photoId}`);
+    return;
+  }
+
+  static async deletePhoto(userId, photoId) {
+    const response = await this.post('delete_photo', {
+      userId: userId,
+      photoId: photoId,
+    });
+    return;
+  }
+
+  static async tryLogIn(userId, password) {
+    const response = await this.post('login', {
+      userId: userId,
+      password: password,
+    });
+    const json = await response.json();
+    return json.isSuccessful;
+  }
+
   static async putVote(photoId, userId, level) {
+    const response = await this.post('vote', {
+      photoId: photoId,
+      userId: userId,
+      level: level,
+    });
+    return;
+  }
+
+  static async post(path) {
+    const requestOptions = {
+      method: 'POST'
+    };
+    return fetch(path, requestOptions);
+  }
+
+  static async post(path, object) {
     const requestOptions = {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        photoId: photoId,
-        userId: userId,
-        level: level,
-      }),
+      body: JSON.stringify(object),
     };
-    await fetch('vote', requestOptions);
-    return;
+    return fetch(path, requestOptions);
   }
 }
 

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Vert } from 'components/Vert';
 import { Container } from 'reactstrap';
-import { User } from 'tools/User';
 
 export class Pagelayout extends Component {
 

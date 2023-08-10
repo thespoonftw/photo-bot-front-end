@@ -9,7 +9,7 @@ export class LoginPage extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { users: null };
+    this.state = { users: null, attemptingLogIn: false };
     this.passwordRef = React.createRef();
   } 
 
@@ -36,13 +36,15 @@ export class LoginPage extends Component {
 
   renderLogin() {
     return <>
-      <p>User:</p>
+      <p><b>Select User:</b></p>
       {this.state.users.getActive().map(u => 
-        <UserTag user={u} onClick={() => this.selectUser(u)} isActive={u === this.state.selectedUser} />
+        <UserTag user={u} onClick={() => this.selectUser(u)} isActive={u === this.state.selectedUser} disabled={this.state.attemptingLogIn} />
       )}
       <br/>
       <br/>
-      <p>Password:</p>
+      <br/>
+      <p><b>Enter Password: </b></p>
+      <p>Currently your password is the same as your discord username.</p>
       <input type="password" style={{width: "200px"}} ref={this.passwordRef}/>
       <br/>
       <br/>
@@ -54,7 +56,7 @@ export class LoginPage extends Component {
         :
         <p>&nbsp;</p>
       }      
-      <button style={{width: "200px"}} disabled={!this.state.selectedUser} onClick={() => this.tryLogin()}>Login</button>
+      <button style={{width: "200px"}} disabled={!this.state.selectedUser || this.state.attemptingLogIn} onClick={() => this.tryLogin()}>Login</button>
 
     </>
   }
@@ -72,10 +74,15 @@ export class LoginPage extends Component {
     this.setState({selectedUser: user});
   }
 
-  tryLogin() {
-    const password = this.passwordRef.current.value;
+  async tryLogin() {
+    this.setState({attemptingLogIn: true});
+    this.setState({incorrectPassword: false});
 
-    if (password === this.state.selectedUser.name) {
+    const password = this.passwordRef.current.value;
+    const success = await Http.tryLogIn(this.state.selectedUser.id, password);
+    this.setState({attemptingLogIn: false});
+
+    if (success) {
       this.login(this.state.selectedUser);
     } else {
       this.setState({incorrectPassword: true});

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { User } from 'tools/User';
 import { UserTag } from 'components/UserTag';
-import { Modal, ModalHeader, ModalBody } from 'reactstrap';
+import { Modal, ModalHeader, ModalBody, Button } from 'reactstrap';
 import { AlbumTag } from 'components/AlbumTag';
 import { Http } from 'tools/Http'; 
 
@@ -10,7 +10,7 @@ export class PhotoModal extends Component {
 
     constructor(props){
         super(props);
-        this.state = {loaded: false, errored: false, voteLevel: 0, loadedVotes: false, score: 0};
+        this.state = {loaded: false, errored: false, trashed: false, voteLevel: 0, loadedVotes: false, score: 0};
     }
 
     componentDidMount() {
@@ -30,12 +30,15 @@ export class PhotoModal extends Component {
           this.props.next();
         } else if (event.keyCode === 40) { // Down
             this.setVoteLevel(-1);
+        } else if (event.keyCode === 46) { // Delete
+            this.sendToTrash();
         }
       };
 
     async componentDidUpdate(prevProps) {
         if ((!prevProps.isOpen && this.props.isOpen) || prevProps.photo !== this.props.photo) {
             this.setState({ loaded: false, errored: false, loadedVotes: false, score: this.props.photo.score });
+            this.setState({ trashed: this.props.photo.isTrashed })
 
             if (!User.getUser()) { return; }
             const voteLevel = await Http.getVoteLevel(User.getUser().id, this.props.photo.id);
@@ -48,6 +51,18 @@ export class PhotoModal extends Component {
         this.props.photo.score = newScore;
         this.setState({voteLevel: voteLevel, score: newScore})
         Http.putVote(this.props.photo.id, User.getUser().id, voteLevel);
+    }
+
+    sendToTrash() {
+        this.setState({trashed: true});
+        this.props.photo.isTrashed = true;
+        Http.sendToTrash(this.props.photo.id);
+    }
+
+    deletePhoto() {
+        this.setState({trashed: true});
+        this.props.photo.isTrashed = true;
+        Http.deletePhoto(User.getUser().id, this.props.photo.id);
     }
 
     render() {
@@ -144,15 +159,54 @@ export class PhotoModal extends Component {
                             </>                          
                         }
 
+                        { User.isAdmin() &&
+                            <span>
+                                &nbsp;
+                                &nbsp;
+                                { this.state.trashed 
+                                ?
+                                <>
+                                    <Button
+                                        outline 
+                                        disabled
+                                        style={{width: "75px", height: "20px", display: "inline-flex", alignItems: "center", justifyContent: "center"}}
+                                        >Trashed
+                                    </Button>
+                                </>
+                                
+                                :
+                                <>
+                                    <Button 
+                                        outline 
+                                        color="secondary" 
+                                        style={{width: "75px", height: "20px", display: "inline-flex", alignItems: "center", justifyContent: "center"}}
+                                        onClick={() => this.sendToTrash()}
+                                        >Trash
+                                    </Button>
+                                    &nbsp;
+                                    <Button 
+                                        outline 
+                                        color="secondary" 
+                                        style={{width: "75px", height: "20px", display: "inline-flex", alignItems: "center", justifyContent: "center"}}
+                                        onClick={() => this.deletePhoto()}
+                                        >Delete
+                                    </Button>
+                                </>                                
+                                }
+
+                                
+                            </span>
+                        }
+
                                           
                     </div>               
 
                     <div>
 
                         { User.isAdmin() &&
-                        <span>
-                            ID: <span style={{display: "inline-block", width: "50px", textAlign: "center"}}><b>{this.props.photo.id}</b></span> &nbsp;
-                        </span>
+                            <span>
+                                ID: <span style={{display: "inline-block", width: "50px", textAlign: "center"}}><b>{this.props.photo.id}</b></span> &nbsp;
+                            </span>
                         }
 
                         { this.props.albums && <>
