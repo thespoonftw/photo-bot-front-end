@@ -48,6 +48,16 @@ export class Http {
     return;
   }
 
+  static async setAlbumDate(albumId, year, month) {
+    console.log("testing!");
+    const response = await this.post('album_date', {
+      albumId: albumId,
+      year: year,
+      month: month,
+    });
+    return;
+  }
+
   static async deletePhoto(userId, photoId) {
     const response = await this.post('delete_photo', {
       userId: userId,

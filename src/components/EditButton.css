@@ -1,0 +1,11 @@
+
+.edit-button {
+    padding: 10px;
+    color: #0066D6;
+    text-decoration: none;
+}
+
+.edit-button:hover {
+    text-decoration: underline;
+    cursor: pointer;
+  }

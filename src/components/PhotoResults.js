@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import { PhotoGrid } from 'components/PhotoGrid';
 import { Vert } from 'components/Vert';
-import { User } from 'tools/User';
-import { Helper } from 'tools/Helper';
-import { UserTag } from 'components/UserTag';
 
 const POPULAR = "Most Popular";
 const NEWEST = "Newest";
@@ -39,16 +36,8 @@ export class PhotoResults extends Component {
 
   render () {
     return <>
-      { this.props.month && this.props.year &&
-        <p><b>Date:</b> {Helper.getMonth(this.props.month)} {this.props.year}</p>
-      }
-
       <p><b>Photos: </b>{this.props.photos.length}</p>
 
-      { this.props.usersInAlbum &&
-        <p><b>Users:</b> {this.renderUsers()} </p>
-      }
-      
       <p>
         <b>Sort By: &nbsp;</b>
         <select style={{width: "150px"}} onChange={this.handleSortChange} >
@@ -63,29 +52,5 @@ export class PhotoResults extends Component {
       }
       
     </>
-  }
-
-  setSorting() {
-
-  }
-
-  renderUsers() {
-
-    const user = User.getUser();
-    const isUserInAlbum = user && this.props.usersInAlbum.filter((u) => u.id === user.id).length > 0;
-    const vips = this.props.usersInAlbum.filter((u) => u.level >= 1 && (!user || u.id !== user.id));
-    const others = this.props.usersInAlbum.filter((u) => u.level < 1 && (!user || u.id !== user.id));
-
-    return <span>
-      { isUserInAlbum &&
-        <UserTag user={user} isActive={true} />
-      }
-      {vips.map(u => 
-        <UserTag user={u} />
-      )}
-      {others.map(u => 
-        <UserTag user={u} />
-      )}
-    </span>
   }
 }

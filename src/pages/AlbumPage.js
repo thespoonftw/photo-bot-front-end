@@ -3,6 +3,10 @@ import { Pagelayout } from 'components/PageLayout';
 import { Http } from 'tools/Http';
 import { PhotoResults} from 'components/PhotoResults';
 import { User } from 'tools/User';
+import { Helper } from 'tools/Helper';
+import { UserTag } from 'components/UserTag';
+import { EditButton } from 'components/EditButton';
+import { EditDateModal } from 'components/EditDateModal';
 
 export class AlbumPage extends Component {
   static displayName = AlbumPage.name;
@@ -20,6 +24,7 @@ export class AlbumPage extends Component {
   }
 
   render () {
+
     return <>{ this.state.albumData && (
       
       <Pagelayout Title={this.state.albumData.name} >
@@ -30,17 +35,60 @@ export class AlbumPage extends Component {
             <p><a href="/albums">&#60;- Return</a></p>
             <p>&nbsp;</p>
           </>
-        }        
+        }
+
+        <p>
+          <b>Date:</b> 
+          &nbsp;
+          {Helper.getMonth(this.state.albumData.month)} 
+          &nbsp;
+          {this.state.albumData.year}
+
+          { User.isAdmin() &&
+          <EditButton>
+            <EditDateModal albumData={this.state.albumData}/>
+          </EditButton>
+          }
+        </p>
+
+        <p>
+          <b>Users:</b> 
+          &nbsp;
+          {this.renderUsers()} 
+          { User.isAdmin() &&
+          <EditButton>
+            
+          </EditButton>
+          }
+        </p>
 
         <PhotoResults
-          month={this.state.albumData.month}
-          year={this.state.albumData.year}
           users={this.state.users}
-          usersInAlbum={this.state.usersInAlbum}
           photos={this.state.albumData.photos}
         />
+
       </Pagelayout>
 
     )}</>
+  }
+  
+  renderUsers() {
+
+    const user = User.getUser();
+    const isUserInAlbum = user && this.state.usersInAlbum.filter((u) => u.id === user.id).length > 0;
+    const vips = this.state.usersInAlbum.filter((u) => u.level >= 1 && (!user || u.id !== user.id));
+    const others = this.state.usersInAlbum.filter((u) => u.level < 1 && (!user || u.id !== user.id));
+
+    return <span>
+      { isUserInAlbum &&
+        <UserTag user={user} isActive={true} />
+      }
+      {vips.map(u => 
+        <UserTag user={u} />
+      )}
+      {others.map(u => 
+        <UserTag user={u} />
+      )}
+    </span>
   }
 }
