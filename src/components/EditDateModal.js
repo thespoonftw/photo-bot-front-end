@@ -6,7 +6,6 @@ export class EditDateModal extends Component {
 
   constructor(props) {
     super(props);
-    console.log(this.props.albumData);
     this.state = { month: this.props.albumData.month, year: this.props.albumData.year };
   }
 

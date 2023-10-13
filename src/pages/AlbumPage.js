@@ -7,6 +7,7 @@ import { Helper } from 'tools/Helper';
 import { UserTag } from 'components/UserTag';
 import { EditButton } from 'components/EditButton';
 import { EditDateModal } from 'components/EditDateModal';
+import { EditMembersModal } from 'components/EditMembersModal';
 
 export class AlbumPage extends Component {
   static displayName = AlbumPage.name;
@@ -57,7 +58,7 @@ export class AlbumPage extends Component {
           {this.renderUsers()} 
           { User.isAdmin() &&
           <EditButton>
-            
+            <EditMembersModal albumData={this.state.albumData}/>
           </EditButton>
           }
         </p>

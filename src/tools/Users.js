@@ -20,6 +20,10 @@ export class Users {
   getActive() {
     return this.usersList.filter((user) => user.level >= 1);
   }
+
+  getAll() {
+    return this.usersList;
+  }
   
 }
 

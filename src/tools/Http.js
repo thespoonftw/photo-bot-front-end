@@ -49,11 +49,18 @@ export class Http {
   }
 
   static async setAlbumDate(albumId, year, month) {
-    console.log("testing!");
     const response = await this.post('album_date', {
       albumId: albumId,
       year: year,
       month: month,
+    });
+    return;
+  }
+
+  static async setAlbumUsers(albumId, users) {
+    const response = await this.post('album_users', {
+      albumId: albumId,
+      users: users
     });
     return;
   }
