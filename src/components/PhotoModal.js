@@ -10,7 +10,7 @@ export class PhotoModal extends Component {
 
     constructor(props){
         super(props);
-        this.state = {loaded: false, errored: false, trashed: false, voteLevel: 0, loadedVotes: false, score: 0};
+        this.state = {loaded: false, errored: false, trashed: false, reactLevel: null, score: 0};
     }
 
     componentDidMount() {
@@ -25,11 +25,11 @@ export class PhotoModal extends Component {
         if (event.keyCode === 37) { // Left
             this.props.prev();
         } else if (event.keyCode === 38) { // Up
-            this.setVoteLevel(1);
+            this.setReactLevel(0);
         } else if (event.keyCode === 39) { // Right
-          this.props.next();
+            this.props.next();
         } else if (event.keyCode === 40) { // Down
-            this.setVoteLevel(-1);
+            this.setReactLevel(null);
         } else if (event.keyCode === 46) { // Delete
             this.sendToTrash();
         }
@@ -37,20 +37,30 @@ export class PhotoModal extends Component {
 
     async componentDidUpdate(prevProps) {
         if ((!prevProps.isOpen && this.props.isOpen) || prevProps.photo !== this.props.photo) {
-            this.setState({ loaded: false, errored: false, loadedVotes: false, score: this.props.photo.score });
+            this.setState({ loaded: false, errored: false, score: this.props.photo.score, reactLevel: null });
             this.setState({ trashed: this.props.photo.isTrashed })
 
             if (!User.getUser()) { return; }
-            const voteLevel = await Http.getVoteLevel(User.getUser().id, this.props.photo.id);
-            this.setState({ loadedVotes: true, voteLevel: voteLevel });
+            const reply = await Http.getReactLevel(User.getUser().id, this.props.photo.id);
+            this.setState({ reactLevel: reply.level });
         }
     }
 
-    setVoteLevel(voteLevel) {
-        const newScore = this.state.score + voteLevel - this.state.voteLevel;
+    setReactLevel(reactLevel) {
+        const newScore = this.state.score + this.levelToScore(reactLevel) - this.levelToScore(this.state.reactLevel);
         this.props.photo.score = newScore;
-        this.setState({voteLevel: voteLevel, score: newScore})
-        Http.putVote(this.props.photo.id, User.getUser().id, voteLevel);
+        this.setState({reactLevel: reactLevel, score: newScore})
+        Http.postReact(this.props.photo.id, User.getUser().id, reactLevel);
+    }
+
+    levelToScore(reactLevel) {
+        if (reactLevel === 0) {
+            return 1;
+        } else if (reactLevel === 1) {
+            return 3;
+        } else {
+            return 0;
+        }
     }
 
     sendToTrash() {
@@ -125,38 +135,28 @@ export class PhotoModal extends Component {
 
                     <div style={{outline: "1px"}}>
 
-                        <span>Score: </span>
+                        <span style={{display: "inline-block", width: "25px", textAlign: "center", fontWeight: "bold", fontSize: "24px"}}>{this.state.score}</span>
 
-                        <span style={{display: "inline-block", width: "25px", textAlign: "center", fontWeight: "bold"}}>{this.state.score}</span>
+                        { this.state.reactLevel === 0 ?
+                            <span style={{width: "20px", height: "20px", cursor: "pointer", backgroundColor: "gold", fontSize: "24px"}} onClick={() => this.setReactLevel(null)}>
+                                👍
+                            </span>
+                            :
+                            <span style={{width: "20px", height: "20px", cursor: "pointer", fontSize: "24px"}} onClick={() => this.setReactLevel(0)}>
+                                👍
+                            </span>
+                        }
 
-                        { this.state.loadedVotes && 
-                            <>
-                                { this.state.voteLevel === 1 ?
-                                    <img style={{width: "20px", height: "20px", cursor: "pointer"}} alt=""
-                                        src={"./upvote.png"}
-                                        onClick={() => this.setVoteLevel(0)}
-                                    />
-                                    :
-                                    <img style={{width: "20px", height: "20px", cursor: "pointer"}} alt=""
-                                        src={"./upvote2.png"}
-                                        onClick={() => this.setVoteLevel(1)}
-                                    />
-                                }
+                        &nbsp;
 
-                                &nbsp;
-
-                                { this.state.voteLevel === -1 ?
-                                    <img style={{width: "20px", height: "20px", cursor: "pointer"}} alt=""
-                                        src={"./downvote.png"}
-                                        onClick={() => this.setVoteLevel(0)}
-                                    />
-                                    :
-                                    <img style={{width: "20px", height: "20px", cursor: "pointer"}} alt=""
-                                        src={"./downvote2.png"}
-                                        onClick={() => this.setVoteLevel(-1)}
-                                    />
-                                }
-                            </>                          
+                        { this.state.reactLevel === 1 ?
+                            <span style={{width: "20px", height: "20px", cursor: "pointer", backgroundColor: "gold", fontSize: "24px"}} onClick={() => this.setReactLevel(null)}>
+                                ❤️
+                            </span>
+                            :
+                            <span style={{width: "20px", height: "20px", cursor: "pointer", fontSize: "24px"}} onClick={() => this.setReactLevel(1)}>
+                                ❤️
+                            </span>
                         }
 
                         { User.isAdmin() &&

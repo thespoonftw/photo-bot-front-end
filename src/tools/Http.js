@@ -38,9 +38,9 @@ export class Http {
     return new Users(json);
   }
 
-  static async getVoteLevel(userId, photoId) {
-    const response = await fetch(`voteLevel?userId=${userId}&photoId=${photoId}`);
-    return await response.json();
+  static async getReactLevel(userId, photoId) {
+    const response = await fetch(`react_level?userId=${userId}&photoId=${photoId}`);
+    return await response?.json();
   }
 
   static async sendToTrash(photoId) {
@@ -82,8 +82,8 @@ export class Http {
     return json.isSuccessful;
   }
 
-  static async putVote(photoId, userId, level) {
-    const response = await this.post('vote', {
+  static async postReact(photoId, userId, level) {
+    const response = await this.post('react', {
       photoId: photoId,
       userId: userId,
       level: level,
