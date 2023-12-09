@@ -45,8 +45,7 @@ export class NavMenu extends Component {
                 </div>
             </div>
             <div style={{marginLeft: "-500px", lineHeight: "2.5"}}>
-            // MIKE below there are three links that we'll use to move between each project, these will need their own pages and some heirarchy ruling so that all of the photobot lives under the first one
-              <div style={{fontFamily: "league-spartan", fontSize: "25px", display: "flex", justifyContent: "space-between", marginLeft: "-500px",}}>
+              <div style={{fontFamily: "league-spartan", fontSize: "25px", display: "flex", justifyContent: "space-between", marginLeft: "-500px",}}> 
                 <div><NavLink to="" className="" activeClassName="" exact>PHOTOBOT</NavLink></div>
                 <div><NavLink to="" className="" activeClassName="" exact>SPEND</NavLink></div>
                 <div><NavLink to="" className="" activeClassName="" exact>CALENDAR</NavLink></div>
