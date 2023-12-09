@@ -4,8 +4,8 @@
 
 @font-face {
     font-family: 'kollektifbold';
-    src: url(/Users/emma/Documents/Photobot/photo-bot-front-end/public/fonts/kollektif/kollektif-bold-webfont.woff2) format('woff2'),
-         url(/Users/emma/Documents/Photobot/photo-bot-front-end/public/fonts/kollektif/kollektif-bold-webfont.woff) format('woff');
+    src: url(/public/fonts/kollektif/kollektif-bold-webfont.woff2) format('woff2'),
+         url(/public/fonts/kollektif/kollektif-bold-webfont.woff) format('woff');
     font-weight: normal;
     font-style: normal;
 
@@ -16,8 +16,8 @@
 
 @font-face {
     font-family: 'kollektifbold_italic';
-    src: url(/Users/emma/Documents/Photobot/photo-bot-front-end/public/fonts/kollektif/kollektif-bolditalic-webfont.woff2) format('woff2'),
-         url(/Users/emma/Documents/Photobot/photo-bot-front-end/public/fonts/kollektif/kollektif-bolditalic-webfont.woff) format('woff');
+    src: url(/public/fonts/kollektif/kollektif-bolditalic-webfont.woff2) format('woff2'),
+         url(/public/fonts/kollektif/kollektif-bolditalic-webfont.woff) format('woff');
     font-weight: normal;
     font-style: normal;
 
@@ -28,8 +28,8 @@
 
 @font-face {
     font-family: 'kollektifitalic';
-    src: url(/Users/emma/Documents/Photobot/photo-bot-front-end/public/fonts/kollektif/kollektif-italic-webfont.woff2) format('woff2'),
-         url(/Users/emma/Documents/Photobot/photo-bot-front-end/public/fonts/kollektif/kollektif-italic-webfont.woff) format('woff');
+    src: url(/public/fonts/kollektif/kollektif-italic-webfont.woff2) format('woff2'),
+         url(/public/fonts/kollektif/kollektif-italic-webfont.woff) format('woff');
     font-weight: normal;
     font-style: normal;
 
@@ -40,8 +40,8 @@
 
 @font-face {
     font-family: 'kollektifregular';
-    src: url(/Users/emma/Documents/Photobot/photo-bot-front-end/public/fonts/kollektif/kollektif-webfont.woff2) format('woff2'),
-         url(/Users/emma/Documents/Photobot/photo-bot-front-end/public/fonts/kollektif/kollektif-webfont.woff) format('woff');
+    src: url(/public/fonts/kollektif/kollektif-webfont.woff2) format('woff2'),
+         url(/public/fonts/kollektif/kollektif-webfont.woff) format('woff');
     font-weight: normal;
     font-style: normal;
 
@@ -49,12 +49,11 @@
 
 @font-face {
     font-family: 'league-spartan';
-    src: url(/Users/emma/Documents/Photobot/photo-bot-front-end/public/fonts/league-spartan/leaguespartan-bold.eot);
-    src: url('/Users/emma/Documents/Photobot/photo-bot-front-end/public/fonts/league-spartan/leaguespartan-bold.eot#iefix') format('embedded-opentype'),
-         url(/Users/emma/Documents/Photobot/photo-bot-front-end/public/fonts/league-spartan/leaguespartan-bold.woff2) format('woff2'),
-         url(/Users/emma/Documents/Photobot/photo-bot-front-end/public/fonts/league-spartan/leaguespartan-bold.woff) format('woff'),
-         url(/Users/emma/Documents/Photobot/photo-bot-front-end/public/fonts/league-spartan/leaguespartan-bold.ttf) format('truetype'),
-         url(/Users/emma/Documents/Photobot/photo-bot-front-end/public/fonts/league-spartan/leaguespartan-bold.svg) format('svg');
+    src: url(/public/fonts/league-spartan/leaguespartan-bold.eot);
+    src: url(/public/fonts/league-spartan/leaguespartan-bold.woff2) format('woff2'),
+         url(/public/fonts/league-spartan/leaguespartan-bold.woff) format('woff'),
+         url(/public/fonts/league-spartan/leaguespartan-bold.ttf) format('truetype'),
+         url(/public/fonts/league-spartan/leaguespartan-bold.svg) format('svg');
     font-weight: bold;
     font-style: normal;
 
