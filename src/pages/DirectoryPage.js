@@ -5,6 +5,7 @@ import { Http } from 'tools/Http';
 import { AlbumTag } from '../components/AlbumTag';
 import { Vert } from 'components/Vert';
 import { User } from 'tools/User';
+import './pages.css';
 
 export class DirectoryPage extends Component {
   static displayName = DirectoryPage.name;
@@ -36,6 +37,32 @@ export class DirectoryPage extends Component {
 
   render () {
     return <Pagelayout>
+<div style={{display: "flex", justifyContent: "space-between", marginLeft: "150px", marginRight: "150px"}}>
+    <div class="dropdown">
+      <button onclick="myFunction()" class="dropbtn">Dropdown</button>
+      <div id="myDropdown" class="dropdown-content">
+       <a href="#">Link 1</a>
+       <a href="#">Link 2</a>
+       <a href="#">Link 3</a>
+       </div>
+   </div>
+   <div class="dropdown">
+   <button onclick="myFunction()" class="dropbtn">Dropdown</button>
+   <div id="myDropdown" class="dropdown-content">
+    <a href="#">Link 1</a>
+    <a href="#">Link 2</a>
+    <a href="#">Link 3</a>
+    </div>
+</div>
+<div class="dropdown">
+<button onclick="myFunction()" class="dropbtn">Dropdown</button>
+<div id="myDropdown" class="dropdown-content">
+ <a href="#">Link 1</a>
+ <a href="#">Link 2</a>
+ <a href="#">Link 3</a>
+ </div>
+</div>
+</div>
       {
         User.getUser()
         ?
@@ -59,5 +86,24 @@ export class DirectoryPage extends Component {
           <p>You must be logged in to browse albums.</p>
       }
     </Pagelayout>
+  }
+}
+/* When the user clicks on the button,
+toggle between hiding and showing the dropdown content */
+function myFunction() {
+  document.getElementById("myDropdown").classList.toggle("show");
+}
+
+// Close the dropdown menu if the user clicks outside of it
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
   }
 }
