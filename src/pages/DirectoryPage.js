@@ -47,7 +47,7 @@ export class DirectoryPage extends Component {
               <>
                 <p><b>{y}</b></p>
                 { this.state.albums.filter(a => a.year === y).map(a => 
-                  <div key={a.id}><Link to={"/album/" + a.id} style={{fontSize: "20px"}} ><AlbumTag name={a.name}/></Link></div>
+                  <div key={a.id}><Link to={"/album/" + a.imgurId} style={{fontSize: "20px"}} ><AlbumTag name={a.name}/></Link></div>
                 )}
                 <Vert />
               </>
