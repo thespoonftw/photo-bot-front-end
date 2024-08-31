@@ -37,15 +37,17 @@ export class PhotoGrid extends Component {
       <div className="container">
         {rows.map(y => 
           <div className="row" key={y}>
-            {columns.map(x =>
-              x + (y * 3) < this.props.photos.length ?
+            {columns.map(x => {
+              const i = x + (y * 3);
+
+              i < this.props.photos.length ?
                 <PhotoThumbnail 
-                  url={`thumbnails/${this.props.photos[x + (y * 3)].id}.jpg`} 
-                  onClick={() => this.clickImage(x + (y * 3))} key={x + (y * 3)}
+                  url={`https://i.imgur.com/${this.props.photos[i].imgurId}`} 
+                  onClick={() => this.clickImage(i)} key={i}
                 ></PhotoThumbnail>
                 :
                 <div className="col-md"></div>
-            )}
+            })}
           </div>          
         )}        
   
