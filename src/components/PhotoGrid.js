@@ -40,9 +40,9 @@ export class PhotoGrid extends Component {
             {columns.map(x => {
               const i = x + (y * 3);
 
-              i < this.props.photos.length ?
+              return i < this.props.photos.length ?
                 <PhotoThumbnail 
-                  url={`https://i.imgur.com/${this.props.photos[i].imgurId}`} 
+                  url={`https://i.imgur.com/${this.props.photos[i].thumbnailId}.jpeg`} 
                   onClick={() => this.clickImage(i)} key={i}
                 ></PhotoThumbnail>
                 :

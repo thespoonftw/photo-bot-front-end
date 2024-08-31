@@ -104,7 +104,7 @@ export class PhotoModal extends Component {
 
                         {!this.state.loaded && !this.state.errored && 
                             <img 
-                                src={`thumbnails/${this.props.photo.id}.jpg`} 
+                                src={`https://i.imgur.com/${this.props.photo.thumbnailId}.jpeg`} 
                                 style={{ width: "100%", height: "100%", objectFit: "contain", top: "0", left: "0" }} 
                                 alt=""
                             />
